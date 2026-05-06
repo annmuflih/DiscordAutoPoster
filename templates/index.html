@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Auto Poster Pro</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Global Actions -->
+        <div class="actions" style="margin-bottom: 20px; padding: 15px; border-radius: 12px; display: flex; gap: 10px;">
+            <button id="btn-start-all" class="btn-primary" style="flex:1; padding: 10px;"><i class="fas fa-play-circle"></i> Start All Accounts</button>
+            <button id="btn-stop-all" class="btn-danger" style="flex:1; padding: 10px;"><i class="fas fa-stop-circle"></i> Stop All Accounts</button>
+        </div>
+
+        <!-- Status Banner (Current Profile) -->
+        <div class="status-banner" id="status-banner">
+            <div>
+                <span class="status-indicator stopped" id="status-indicator"></span>
+                <span id="status-text">Status: Stopped</span>
+            </div>
+            <div class="status-controls">
+                <button id="btn-start" class="btn-primary btn-sm"><i class="fas fa-play"></i> Start Profile</button>
+                <button id="btn-stop" class="btn-danger btn-sm" style="display:none;"><i class="fas fa-stop"></i> Stop Profile</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <!-- Profile Selector -->
+            <div class="form-group">
+                <label>ACCOUNT PROFILE</label>
+                <div style="display: flex; gap: 10px;">
+                    <div class="input-with-icon" style="flex: 1;">
+                        <i class="fas fa-users icon text-warning"></i>
+                        <select id="profile_select" class="select-interval" style="width: 100%; padding-left: 45px; cursor: pointer;">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                    <button type="button" class="btn-secondary" style="flex: none; padding: 0 15px;" onclick="addProfile()"><i class="fas fa-plus"></i></button>
+                    <button type="button" class="btn-secondary" style="flex: none; padding: 0 15px; color: var(--danger);" onclick="deleteProfile()"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+
+            <!-- Token Area -->
+            <div class="form-group">
+                <label>AUTH TOKEN</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-fingerprint icon"></i>
+                    <input type="password" id="auth_token" placeholder="Your Discord Token...">
+                </div>
+            </div>
+
+            <!-- Interval -->
+            <div class="form-group">
+                <label>INTERVAL</label>
+                <div class="interval-container">
+                    <div class="input-with-icon input-interval">
+                        <i class="far fa-clock icon"></i>
+                        <input type="text" id="interval_range" placeholder="40-60">
+                    </div>
+                    <select id="interval_unit" class="select-interval">
+                        <option value="Minutes">Minutes</option>
+                        <option value="Seconds">Seconds</option>
+                    </select>
+                </div>
+                <div class="tip">
+                    <i class="fas fa-info-square"></i> ℹ Tip: Use range like "1-5" for random interval
+                </div>
+            </div>
+            <!-- Advanced Settings Accordion -->
+            <div style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                <div style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 12px; font-weight: bold;" onclick="toggleAdvanced()">
+                    <span><i class="fas fa-cog"></i> ADVANCED SETTINGS</span>
+                    <i id="adv-arrow" class="fas fa-chevron-down"></i>
+                </div>
+                <div id="advanced-settings" style="display: none; margin-top: 15px;">
+                    <!-- Webhook URL -->
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label>WEBHOOK URL</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-link icon text-muted"></i>
+                            <input type="text" id="webhook_url" placeholder="https://discord.com/api/webhooks/...">
+                        </div>
+                    </div>
+                    <!-- User to ping -->
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>USER TO TAG ON ERROR</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-at icon text-muted"></i>
+                            <input type="text" id="error_ping_id" placeholder="Discord User ID (e.g. 867276869...)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid var(--border-color); margin: 20px 0;"></div>
+
+            <!-- Channel Editor -->
+            <div class="form-group">
+                <div class="label-row">
+                    <label id="target_editor_label">ADD NEW TARGET</label>
+                    <button type="button" class="btn-outline-sm" onclick="openChannelSelector()">CHOOSE CHANNEL</button>
+                </div>
+                <div class="input-with-icon" style="margin-bottom: 10px;">
+                    <i class="far fa-comment-alt icon"></i>
+                    <input type="text" id="channel_id" placeholder="Channel ID (e.g. 1498909502848630826)" oninput="clearChannelName()">
+                    <input type="hidden" id="channel_name" value="">
+                    <input type="hidden" id="edit_index" value="-1">
+                </div>
+                <div class="editor-toolbar">
+                    <button type="button" onclick="insertFormat('**')"><i class="fas fa-bold"></i></button>
+                    <button type="button" onclick="insertFormat('*')"><i class="fas fa-italic"></i></button>
+                    <button type="button" onclick="insertFormat('__')"><i class="fas fa-underline"></i></button>
+                    <button type="button" onclick="insertFormat('~~')"><i class="fas fa-strikethrough"></i></button>
+                </div>
+                <textarea id="message" rows="4" placeholder="Message content..."></textarea>
+                
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button id="btn-cancel-edit" type="button" class="btn-secondary btn-sm" style="display:none;" onclick="cancelEdit()">Cancel Edit</button>
+                    <button id="btn-add-target" type="button" class="btn-secondary btn-sm" style="flex:1;"><i class="fas fa-plus"></i> Add/Save Target</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions" style="margin-bottom: 20px;">
+            <button id="btn-save" class="btn-primary" style="font-size: 16px;"><i class="fas fa-save"></i> Save Global Configuration</button>
+        </div>
+
+        <div class="card" id="target-list-card" style="padding: 15px 20px;">
+            <div class="label-row" style="margin-bottom: 10px;">
+                <label style="font-size: 13px;">TARGET CHANNELS (<span id="target-count">0</span>)</label>
+            </div>
+            <ul class="list-group" id="target-list">
+                <!-- Targets injected here -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal for Server/Channel Selection -->
+    <div id="selection-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Select Server</h3>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="modal-loading" style="display:none; text-align:center; padding:20px;">
+                    <i class="fas fa-circle-notch fa-spin fa-2x text-accent"></i>
+                    <p style="margin-top:10px; font-size:12px;">Fetching data from Discord...</p>
+                </div>
+                <ul id="modal-list" class="list-group">
+                    <!-- List items will be injected here via JS -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary btn-sm" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/main.js"></script>
+</body>
+</html>
