@@ -1,0 +1,25 @@
+{
+    "active_profile": "Main Account",
+    "profiles": {
+        "Main Account": {
+            "auth_token": "ODA4MTU4MzUzOTc1OTM0OTc2.GILtup.4LkDMt9nKSUugoOj1qO_dJPoqpDD-RzonmytbQ",
+            "interval_max": 120,
+            "interval_min": 120,
+            "interval_unit": "Minutes",
+            "targets": [
+                {
+                    "id": "733050486143320164",
+                    "name": "#\ud83d\udc89\u30fbbuy-sell-malady",
+                    "message": ":Verified: SURGMA x SURGAW :Verified: \n\nAuto Cure 3 :WL: Go :Verified: SURGMA :Verified: \n\n\ud83e\uddb7 Auto Cure Grumbleteeth 3 :WL: \n\ud83d\udc13 Auto Cure Chicken Feet 3 :WL: \n\u270a Auto Cure Torn Muscle 3 :WL: \n\ud83d\udc8e Auto Cure Gem Cuts 3 :WL: \n\ud83d\udc94 Auto Cure Broken Heart 3 :WL: \n\ud83e\udde0 Auto Cure Brain Worm 3 :WL:\n\ud83e\uddb4 Auto Cure Ecto Bone 3 :WL: \nCheap Auto Cure Go :Verified: SURGMA :Verified:\n\n:Verified: SURGMA x SURGAW :Verified:"
+                },
+                {
+                    "id": "733049257648586792",
+                    "name": "#\ud83d\udc8a\u30fbbuy-sell-surg-tools",
+                    "message": "<:Verified:1000267030550827128> SURGAW x SURGMA <:Verified:1000267030550827128> \n\n<:SurgicalAnesthetic:892136763718512642> Surgical Annesthetic 3/1 <:WL:880251447470596157>\n<:SurgicalAntibiotics:892136764045684787> Surgical Antibiotics 2/1 <:WL:880251447470596157>\n<:SurgicalAntiseptic:892136764058255431> Surgical Antiseptic 3/1 <:WL:880251447470596157>\n<:SurgicalClamp:892136728104685628> Surgical Clamp 3/1 <:WL:880251447470596157>\n<:SurgicalDefibrillator:892136728511533076> Surgical Defibrillator 3/1 <:WL:880251447470596157>\n<:SurgicalLabKit:892136728566071367> Surgical LabKit  3/1 <:WL:880251447470596157>\n<:SurgicalPins:892136728566063104> Surgical Pins 3/1 <:WL:880251447470596157>\n<:SurgicalScalpel:958337498742935552> Surgical Scalpel 2/1 <:WL:880251447470596157>\n<:SurgicalSplint:892136728645746688> Surgical Splint 3/1 <:WL:880251447470596157>\n<:SurgicalSponge:892136728591216700> Surgical Sponge 3/1 <:WL:880251447470596157>\n<:SurgicalTransfusion:892136795712659516> Surgical Transfusion 3/1 <:WL:880251447470596157>\n<:SurgicalUltrasound:892136795570065489> Surgical Ultrasound 3/1 <:WL:880251447470596157>\n<:SurgicalStitches:892136728607985734> Surgical Stitches 4 <:WL:880251447470596157>\n\nALL SURG TOOLS CHEAP AT <:gtmega:1272288536107814983> SURGMA <:gtmega:1272288536107814983> \n\n<:Verified:1000267030550827128> SURGAW x SURGMA <:Verified:1000267030550827128>"
+                }
+            ],
+            "webhook_url": "",
+            "error_ping_id": ""
+        }
+    }
+}
