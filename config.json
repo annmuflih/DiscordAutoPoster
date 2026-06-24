@@ -2,7 +2,7 @@
     "active_profile": "Main Account",
     "profiles": {
         "Main Account": {
-            "auth_token": "ODA4MTU4MzUzOTc1OTM0OTc2.GILtup.4LkDMt9nKSUugoOj1qO_dJPoqpDD-RzonmytbQ",
+            "auth_token": "",
             "interval_max": 120,
             "interval_min": 120,
             "interval_unit": "Minutes",
